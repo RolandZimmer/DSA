@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#060818">
+  <meta name="description" content="Bài trình chiếu tương tác về thuật toán tìm kiếm và bảng băm.">
+  <title>DSA — Thuật toán tìm kiếm &amp; Bảng băm</title>
+  <link rel="stylesheet" href="/app.css">
+</head>
+<body>
+  <canvas id="particles" aria-hidden="true"></canvas>
+  <div class="aurora aurora-a" aria-hidden="true"></div>
+  <div class="aurora aurora-b" aria-hidden="true"></div>
+
+  <main class="deck" id="deck" aria-live="polite">
+    <section class="slide cover active" data-title="Mở đầu">
+      <div class="mesh" aria-hidden="true"></div>
+      <div class="cover-copy">
+        <p class="kicker">CẤU TRÚC DỮ LIỆU &amp; GIẢI THUẬT</p>
+        <h1><span>PHẦN A</span><br>Thuật toán tìm kiếm<br>&amp; Bảng băm</h1>
+        <p class="lede">Chọn đúng cấu trúc, tìm đúng cách.</p>
+        <p class="prompt">Hiệu năng bắt đầu từ cách dữ liệu được tổ chức.</p>
+      </div>
+      <div class="cover-orbit" aria-hidden="true">
+        <div class="orbit-ring ring-one"></div>
+        <div class="orbit-ring ring-two"></div>
+        <div class="orbit-core">O(log n)</div>
+        <span class="orbit-node node-a">O(n)</span>
+        <span class="orbit-node node-b">O(1)</span>
+        <span class="orbit-node node-c">hash</span>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Bốn hướng tìm kiếm">
+      <header class="slide-head">
+        <p class="kicker">BỨC TRANH TỔNG QUAN</p>
+        <h2>Bốn cách để tìm một giá trị</h2>
+      </header>
+      <div class="method-grid">
+        <article class="method-card cyan">
+          <span class="method-index">01</span>
+          <h3>Tìm kiếm tuyến tính</h3>
+          <p>Duyệt lần lượt từng phần tử từ đầu đến cuối.</p>
+          <strong>O(n)</strong>
+        </article>
+        <article class="method-card violet">
+          <span class="method-index">02</span>
+          <h3>Tìm kiếm nhị phân</h3>
+          <p>Liên tục chia đôi miền tìm kiếm đã sắp xếp.</p>
+          <strong>O(log n)</strong>
+        </article>
+        <article class="method-card amber">
+          <span class="method-index">03</span>
+          <h3>Tìm kiếm nội suy</h3>
+          <p>Ước lượng vị trí trong dữ liệu phân bố đều.</p>
+          <strong>O(log log n) TB</strong>
+        </article>
+        <article class="method-card pink">
+          <span class="method-index">04</span>
+          <h3>Bảng băm</h3>
+          <p>Biến đổi khóa thành một địa chỉ trong bảng.</p>
+          <strong>O(1) TB</strong>
+        </article>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Tìm kiếm tuyến tính">
+      <div class="split hero-split">
+        <div>
+          <p class="kicker cyan-text">01 — TÌM KIẾM TUYẾN TÍNH</p>
+          <h2>Đơn giản. Tuần tự.<br>Luôn áp dụng được.</h2>
+          <p class="body-large">So sánh giá trị cần tìm với từng phần tử theo thứ tự. Trả về chỉ số khi tìm thấy; trả về <code>-1</code> sau khi đã duyệt hết mảng.</p>
+          <div class="complexity-row">
+            <div><span>Tốt nhất</span><strong>O(1)</strong></div>
+            <div><span>Trung bình</span><strong>O(n)</strong></div>
+            <div><span>Xấu nhất</span><strong>O(n)</strong></div>
+          </div>
+        </div>
+        <div class="scan-visual" aria-label="Linear search scans values from left to right">
+          <div class="scan-beam" aria-hidden="true"></div>
+          <div class="array-cell">14</div>
+          <div class="array-cell">7</div>
+          <div class="array-cell">21</div>
+          <div class="array-cell target">4</div>
+          <div class="array-cell">18</div>
+          <div class="array-indices"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Mô phỏng tuyến tính">
+      <header class="slide-head compact-head">
+        <p class="kicker cyan-text">TÌM KIẾM TUYẾN TÍNH — MÔ PHỎNG</p>
+        <h2>Tìm giá trị <span class="accent">4</span></h2>
+      </header>
+      <div class="demo-panel" data-demo="linear">
+        <div class="demo-array linear-array" aria-label="Array containing 14, 7, 21, 4, 18">
+          <div class="demo-cell" data-value="14"><span>14</span><small>0</small></div>
+          <div class="demo-cell" data-value="7"><span>7</span><small>1</small></div>
+          <div class="demo-cell" data-value="21"><span>21</span><small>2</small></div>
+          <div class="demo-cell" data-value="4"><span>4</span><small>3</small></div>
+          <div class="demo-cell" data-value="18"><span>18</span><small>4</small></div>
+        </div>
+        <div class="trace-line"><span class="trace-dot"></span></div>
+        <p class="demo-status" aria-live="polite">So sánh từ chỉ số 0 →</p>
+        <button class="replay" type="button" data-replay="linear">Chạy lại</button>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Khi nào dùng tìm kiếm tuyến tính">
+      <header class="slide-head">
+        <p class="kicker cyan-text">TÌM KIẾM TUYẾN TÍNH</p>
+        <h2>Khi nào nên dùng?</h2>
+      </header>
+      <div class="decision-columns">
+        <article class="decision good">
+          <h3>Nên dùng khi</h3>
+          <ul>
+            <li>Danh sách có kích thước nhỏ.</li>
+            <li>Dữ liệu chưa được sắp xếp.</li>
+            <li>Cấu trúc không hỗ trợ truy cập ngẫu nhiên, như danh sách liên kết đơn.</li>
+            <li>Chi phí sắp xếp lớn hơn lợi ích tìm kiếm.</li>
+          </ul>
+        </article>
+        <article class="decision avoid">
+          <h3>Không nên dùng khi</h3>
+          <ul>
+            <li>Tập dữ liệu rất lớn.</li>
+            <li>Dữ liệu đã được sắp xếp.</li>
+            <li>Cần tìm nhiều lần trên cùng một tập dữ liệu.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Mã tìm kiếm tuyến tính">
+      <header class="slide-head compact-head">
+        <p class="kicker cyan-text">TÌM KIẾM TUYẾN TÍNH</p>
+        <h2>Từ mã giả đến C++</h2>
+      </header>
+      <div class="code-columns">
+        <div>
+          <p class="code-label">MÃ GIẢ</p>
+          <pre class="code-block"><code><span class="kw">PROCEDURE</span> Linear_Search(Array, Target_Value)
+  <span class="kw">FOR</span> i = 0 <span class="kw">TO</span> length(Array) - 1
+    <span class="kw">IF</span> Array[i] = Target_Value <span class="kw">THEN</span>
+      <span class="kw">RETURN</span> i
+    <span class="kw">END IF</span>
+  <span class="kw">END FOR</span>
+  <span class="kw">RETURN</span> -1
+<span class="kw">END PROCEDURE</span></code></pre>
+        </div>
+        <div>
+          <p class="code-label">C++</p>
+          <pre class="code-block"><code><span class="type">int</span> <span class="fn">linearSearch</span>(<span class="type">int</span> arr[], <span class="type">int</span> n, <span class="type">int</span> x) {
+  <span class="kw">for</span> (<span class="type">int</span> i = 0; i &lt; n; i++) {
+    <span class="kw">if</span> (arr[i] == x)
+      <span class="kw">return</span> i;
+  }
+  <span class="kw">return</span> -1;
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Tìm kiếm nhị phân">
+      <div class="split hero-split">
+        <div>
+          <p class="kicker violet-text">02 — TÌM KIẾM NHỊ PHÂN</p>
+          <h2>Loại một nửa.<br>Rồi lại một nửa.</h2>
+          <p class="body-large">Tìm kiếm nhị phân tìm một giá trị trong mảng <strong>đã sắp xếp</strong> bằng cách so sánh với phần tử giữa và loại bỏ một nửa miền tìm kiếm.</p>
+          <div class="complexity-row violet-row">
+            <div><span>Tốt nhất</span><strong>O(1)</strong></div>
+            <div><span>Trung bình</span><strong>O(log n)</strong></div>
+            <div><span>Xấu nhất</span><strong>O(log n)</strong></div>
+          </div>
+        </div>
+        <div class="halves-visual" aria-label="Binary search repeatedly halves a sorted range">
+          <div class="half-row seven"><i>3</i><i>8</i><i>12</i><i>17</i><i>23</i><i>31</i><i>42</i></div>
+          <div class="half-arrow">↓</div>
+          <div class="half-row four"><i>17</i><i>23</i><i>31</i><i>42</i></div>
+          <div class="half-arrow">↓</div>
+          <div class="half-row two"><i>31</i><i>42</i></div>
+          <div class="half-arrow">↓</div>
+          <div class="half-row one"><i>31</i></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Khi nào dùng tìm kiếm nhị phân">
+      <header class="slide-head">
+        <p class="kicker violet-text">TÌM KIẾM NHỊ PHÂN</p>
+        <h2>Điều kiện bắt buộc: dữ liệu đã sắp xếp</h2>
+      </header>
+      <div class="decision-columns">
+        <article class="decision good violet-border">
+          <h3>Phù hợp nhất</h3>
+          <ul>
+            <li>Tập dữ liệu lớn và đã sắp xếp.</li>
+            <li>Dữ liệu tĩnh hoặc ít thay đổi.</li>
+            <li>Mảng hoặc vector có truy cập ngẫu nhiên O(1).</li>
+            <li>Truy vấn biên: đầu, cuối, vị trí chèn, giá trị gần nhất.</li>
+          </ul>
+        </article>
+        <article class="decision avoid">
+          <h3>Không phù hợp</h3>
+          <ul>
+            <li>Dữ liệu chưa sắp xếp hoặc thay đổi thường xuyên.</li>
+            <li>Danh sách liên kết không truy cập nhanh được phần tử giữa.</li>
+            <li>Tập dữ liệu quá nhỏ.</li>
+            <li>Cần tìm mọi phần tử trùng nhưng không dùng biến thể tìm biên.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Mô phỏng nhị phân">
+      <header class="slide-head compact-head">
+        <p class="kicker violet-text">TÌM KIẾM NHỊ PHÂN — MÔ PHỎNG</p>
+        <h2>Tìm giá trị <span class="violet-text">31</span></h2>
+      </header>
+      <div class="demo-panel" data-demo="binary">
+        <div class="demo-array binary-array" aria-label="Sorted array containing 3, 8, 12, 17, 23, 31, 42">
+          <div class="demo-cell" data-value="3"><span>3</span><small>0</small></div>
+          <div class="demo-cell" data-value="8"><span>8</span><small>1</small></div>
+          <div class="demo-cell" data-value="12"><span>12</span><small>2</small></div>
+          <div class="demo-cell" data-value="17"><span>17</span><small>3</small></div>
+          <div class="demo-cell" data-value="23"><span>23</span><small>4</small></div>
+          <div class="demo-cell" data-value="31"><span>31</span><small>5</small></div>
+          <div class="demo-cell" data-value="42"><span>42</span><small>6</small></div>
+        </div>
+        <div class="range-track"><span class="range-fill"></span></div>
+        <p class="demo-status" aria-live="polite">low = 0 · mid = 3 · high = 6</p>
+        <button class="replay violet-button" type="button" data-replay="binary">Chạy lại</button>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Mã tìm kiếm nhị phân">
+      <header class="slide-head compact-head">
+        <p class="kicker violet-text">TÌM KIẾM NHỊ PHÂN</p>
+        <h2>Cài đặt C++ dạng lặp</h2>
+      </header>
+      <pre class="code-block code-wide"><code><span class="type">int</span> <span class="fn">binarySearch</span>(<span class="type">int</span> array[], <span class="type">int</span> n, <span class="type">int</span> target) {
+  <span class="type">int</span> left = 0;
+  <span class="type">int</span> right = n - 1;
+  <span class="kw">while</span> (left &lt;= right) {
+    <span class="type">int</span> mid = left + (right - left) / 2;
+    <span class="kw">if</span> (array[mid] == target) <span class="kw">return</span> mid;
+    <span class="kw">if</span> (array[mid] &lt; target) left = mid + 1;
+    <span class="kw">else</span> right = mid - 1;
+  }
+  <span class="kw">return</span> -1;
+}</code></pre>
+      <div class="code-note"><strong>mid = left + (right - left) / 2</strong><span>tránh tràn số so với (left + right) / 2</span></div>
+    </section>
+
+    <section class="slide" data-title="Tìm kiếm nội suy">
+      <div class="split hero-split interpolation-layout">
+        <div>
+          <p class="kicker amber-text">03 — TÌM KIẾM NỘI SUY</p>
+          <h2>Ước lượng trước.<br>Thu hẹp sau.</h2>
+          <p class="body-large">Thay vì luôn kiểm tra điểm giữa, tìm kiếm nội suy dự đoán vị trí dựa trên giá trị cần tìm so với hai đầu của miền tìm kiếm.</p>
+          <p class="analogy">Giống như mở danh bạ gần chữ “Y” thay vì mở đúng giữa cuốn sách.</p>
+        </div>
+        <div class="formula-card">
+          <span>pos = low +</span>
+          <div class="fraction"><b>(x − a[low]) × (high − low)</b><i>a[high] − a[low]</i></div>
+          <div class="formula-glow" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Điều kiện tìm kiếm nội suy">
+      <header class="slide-head">
+        <p class="kicker amber-text">TÌM KIẾM NỘI SUY</p>
+        <h2>Nhanh — chỉ khi dữ liệu phù hợp</h2>
+      </header>
+      <div class="decision-columns">
+        <article class="decision good amber-border">
+          <h3>Nên dùng khi</h3>
+          <ul>
+            <li>Mảng đã được sắp xếp.</li>
+            <li>Các giá trị phân bố gần đồng đều.</li>
+            <li>Tập dữ liệu lớn và được tìm kiếm nhiều lần.</li>
+            <li>Có khả năng truy cập ngẫu nhiên.</li>
+          </ul>
+          <div class="metric"><span>Trung bình</span><strong>O(log log n)</strong></div>
+        </article>
+        <article class="decision avoid">
+          <h3>Không nên dùng khi</h3>
+          <ul>
+            <li>Các giá trị bị lệch hoặc tập trung thành cụm.</li>
+            <li>Mảng chưa được sắp xếp.</li>
+            <li>Tập dữ liệu nhỏ.</li>
+          </ul>
+          <div class="metric danger"><span>Xấu nhất</span><strong>O(n)</strong></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Mô phỏng nội suy">
+      <header class="slide-head compact-head">
+        <p class="kicker amber-text">TÌM KIẾM NỘI SUY — MÔ PHỎNG</p>
+        <h2>Tìm giá trị <span class="amber-text">70</span></h2>
+      </header>
+      <div class="demo-panel interpolation-demo" data-demo="interpolation">
+        <div class="ruler-array">
+          <div class="ruler-ticks" aria-hidden="true"></div>
+          <div class="ruler-values">
+            <span>10</span><span>20</span><span>30</span><span>40</span><span>50</span><span>60</span><span class="hit">70</span><span>80</span><span>90</span>
+          </div>
+          <div class="probe"><i></i><b>vị trí ước lượng = 6</b></div>
+        </div>
+        <p class="demo-status">Phân bố đều giúp lần ước lượng đầu tiên chạm đúng 70.</p>
+        <button class="replay amber-button" type="button" data-replay="interpolation">Chạy lại</button>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Mã tìm kiếm nội suy">
+      <header class="slide-head compact-head">
+        <p class="kicker amber-text">TÌM KIẾM NỘI SUY</p>
+        <h2>Cài đặt C++</h2>
+      </header>
+      <pre class="code-block code-wide code-smaller"><code><span class="type">int</span> <span class="fn">interpolationSearch</span>(<span class="type">int</span> arr[], <span class="type">int</span> n, <span class="type">int</span> x) {
+  <span class="type">int</span> low = 0, high = n - 1;
+  <span class="kw">while</span> (low &lt;= high &amp;&amp; x &gt;= arr[low] &amp;&amp; x &lt;= arr[high]) {
+    <span class="kw">if</span> (arr[high] == arr[low])
+      <span class="kw">return</span> arr[low] == x ? low : -1;
+    <span class="type">int</span> pos = low + (<span class="type">double</span>)(x - arr[low]) *
+              (high - low) / (arr[high] - arr[low]);
+    <span class="kw">if</span> (arr[pos] == x) <span class="kw">return</span> pos;
+    <span class="kw">if</span> (arr[pos] &lt; x) low = pos + 1;
+    <span class="kw">else</span> high = pos - 1;
+  }
+  <span class="kw">return</span> -1;
+}</code></pre>
+    </section>
+
+    <section class="slide" data-title="Bảng băm">
+      <div class="split hero-split hash-intro">
+        <div>
+          <p class="kicker pink-text">04 — BẢNG BĂM</p>
+          <h2>Tìm theo khóa,<br>không theo vị trí.</h2>
+          <p class="body-large">Hàm băm biến đổi một khóa thành địa chỉ trong bảng để tìm kiếm, thêm và xóa dữ liệu.</p>
+          <p class="body-large">Nhiều khóa khác nhau có thể tạo ra cùng một địa chỉ. Hiện tượng đó gọi là <strong class="pink-text">xung đột</strong>.</p>
+        </div>
+        <div class="hash-flow" aria-label="A key is transformed by a hash function into an index">
+          <div class="hash-pill key-pill">khóa<br><strong>1246</strong></div>
+          <div class="hash-connector"><span>h(k)</span></div>
+          <div class="hash-pill index-pill">chỉ số<br><strong>249</strong></div>
+          <div class="hash-table-mini">
+            <i>247</i><i>248</i><i class="active">249</i><i>250</i><i>251</i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Các hàm băm">
+      <header class="slide-head">
+        <p class="kicker pink-text">HÀM BĂM</p>
+        <h2>Bốn cách phổ biến để tạo địa chỉ</h2>
+      </header>
+      <div class="function-grid">
+        <article><span>01</span><h3>Phép chia</h3><code>h(k) = k mod m</code></article>
+        <article><span>02</span><h3>Phép nhân</h3><code>⌊m · frac(kA)⌋</code></article>
+        <article><span>03</span><h3>Bình phương giữa</h3><code>middle(k²)</code></article>
+        <article><span>04</span><h3>Phương pháp gấp</h3><code>sum(parts)</code></article>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Phương pháp chia">
+      <header class="slide-head compact-head">
+        <p class="kicker pink-text">HÀM BĂM</p>
+        <h2>Phương pháp chia</h2>
+      </header>
+      <div class="division-layout">
+        <div class="mega-formula">h(k) = k mod m</div>
+        <div class="division-example">
+          <p>Với <strong>k = 1246</strong> và <strong>m = 1000</strong></p>
+          <div><span>1246</span><b>mod 1000</b><strong>= 246</strong></div>
+        </div>
+        <div class="insight-strip">
+          <p>Chọn <strong>m</strong> cẩn thận. Lũy thừa của cơ số thường làm các chữ số bên phải ảnh hưởng quá mạnh.</p>
+          <p>Kích thước bảng là số nguyên tố thường cho phân bố tốt hơn.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Phương pháp bình phương giữa">
+      <header class="slide-head compact-head">
+        <p class="kicker pink-text">HÀM BĂM</p>
+        <h2>Phương pháp bình phương giữa</h2>
+      </header>
+      <div class="split table-split">
+        <div>
+          <p class="body-large">Bình phương khóa, sau đó lấy các chữ số ở giữa kết quả.</p>
+          <div class="square-demo"><span>1246²</span><b>015<span>525</span>16</b><strong>h(k) = 525</strong></div>
+          <p class="muted">Các chữ số giữa chịu ảnh hưởng từ mọi chữ số của khóa ban đầu.</p>
+        </div>
+        <table class="data-table">
+          <thead><tr><th>k</th><th>k²</th><th>h(k) gồm 3 chữ số</th></tr></thead>
+          <tbody>
+            <tr><td>5402</td><td>29181604</td><td>181 / 816</td></tr>
+            <tr><td>0367</td><td>00134689</td><td>134 / 346</td></tr>
+            <tr><td>1246</td><td>01552516</td><td>552 / 525</td></tr>
+            <tr><td>2893</td><td>08898289</td><td>898 / 982</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Phương pháp gấp">
+      <header class="slide-head compact-head">
+        <p class="kicker pink-text">HÀM BĂM</p>
+        <h2>Phương pháp gấp</h2>
+      </header>
+      <div class="fold-layout">
+        <div class="fold-key">17 046 329</div>
+        <div class="fold-cards">
+          <article>
+            <h3>Gấp dịch</h3>
+            <div class="number-stack"><span>329</span><span>046</span><span>017</span><strong>392</strong></div>
+          </article>
+          <article>
+            <h3>Gấp biên</h3>
+            <div class="number-stack"><span>046</span><span>923</span><span>710</span><strong>1679</strong></div>
+          </article>
+        </div>
+        <p class="muted centered">Chia khóa thành các phần dài bằng nhau, căn thẳng hoặc đảo xen kẽ rồi cộng chúng lại.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Xử lý xung đột">
+      <header class="slide-head">
+        <p class="kicker pink-text">XỬ LÝ XUNG ĐỘT</p>
+        <h2>Cùng địa chỉ. Hai chiến lược.</h2>
+      </header>
+      <div class="collision-choice">
+        <article class="open-addressing">
+          <div class="choice-icon">→</div>
+          <h3>Định địa chỉ mở</h3>
+          <p>Mọi bản ghi đều nằm trong bảng. Nếu ô đã bị chiếm, tiếp tục dò một ô trống khác.</p>
+          <ul><li>Dò tuyến tính</li><li>Dò bậc hai</li><li>Băm kép</li></ul>
+        </article>
+        <div class="versus">HOẶC</div>
+        <article class="chaining">
+          <div class="choice-icon">⌁</div>
+          <h3>Phương pháp dây chuyền</h3>
+          <p>Mỗi địa chỉ trỏ đến một tập bản ghi có cùng giá trị băm.</p>
+          <ul><li>Danh sách liên kết</li><li>Cây cân bằng</li><li>Mảng động</li></ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Mô phỏng dò tuyến tính">
+      <header class="slide-head compact-head">
+        <p class="kicker pink-text">XỬ LÝ XUNG ĐỘT — MÔ PHỎNG</p>
+        <h2>Dò tuyến tính với <span class="pink-text">h(k) = k mod 11</span></h2>
+      </header>
+      <div class="probing-demo" data-demo="probing">
+        <div class="keys-row"><span>12</span><span>23</span><span>34</span><i>đều băm về 1</i></div>
+        <div class="hash-slots" aria-label="Hash table slots zero through ten">
+          <div><small>0</small></div><div class="collision-slot"><small>1</small><b></b></div><div><small>2</small><b></b></div><div><small>3</small><b></b></div><div><small>4</small></div><div><small>5</small></div><div><small>6</small></div><div><small>7</small></div><div><small>8</small></div><div><small>9</small></div><div><small>10</small></div>
+        </div>
+        <p class="demo-status">Chèn 12 tại chỉ số 1.</p>
+        <button class="replay pink-button" type="button" data-replay="probing">Chạy lại</button>
+      </div>
+    </section>
+
+    <section class="slide" data-title="So sánh thuật toán">
+      <header class="slide-head compact-head">
+        <p class="kicker">CHỌN PHƯƠNG PHÁP TÌM KIẾM</p>
+        <h2>Ghép đúng thuật toán với dữ liệu</h2>
+      </header>
+      <div class="comparison-wrap">
+        <table class="comparison-table">
+          <thead><tr><th>Phương pháp</th><th>Yêu cầu dữ liệu</th><th>Trung bình</th><th>Xấu nhất</th><th>Phù hợp nhất</th></tr></thead>
+          <tbody>
+            <tr><td><span class="dot cyan-dot"></span>Tuyến tính</td><td>Không</td><td>O(n)</td><td>O(n)</td><td>Danh sách nhỏ hoặc chưa sắp xếp</td></tr>
+            <tr><td><span class="dot violet-dot"></span>Nhị phân</td><td>Đã sắp xếp + truy cập ngẫu nhiên</td><td>O(log n)</td><td>O(log n)</td><td>Mảng lớn đã sắp xếp</td></tr>
+            <tr><td><span class="dot amber-dot"></span>Nội suy</td><td>Đã sắp xếp + phân bố đều</td><td>O(log log n)</td><td>O(n)</td><td>Dữ liệu số phân bố đều</td></tr>
+            <tr><td><span class="dot pink-dot"></span>Bảng băm</td><td>Hàm băm tốt + đủ dung lượng</td><td>O(1)</td><td>O(n)</td><td>Tra cứu khóa nhiều lần</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="slide finale" data-title="Kết luận">
+      <div class="finale-glow" aria-hidden="true"></div>
+      <p class="kicker">ĐIỀU CẦN NHỚ</p>
+      <h2>Không có thuật toán tìm kiếm<br><span>tốt nhất</span> cho mọi bài toán.</h2>
+      <p>Hiệu năng phụ thuộc vào thứ tự, phân bố, kiểu truy cập và tần suất cập nhật dữ liệu.</p>
+      <div class="finale-badges"><span>Hiểu dữ liệu</span><span>Chọn cấu trúc</span><span>Xử lý trường hợp biên</span></div>
+    </section>
+  </main>
+
+  <nav class="controls" aria-label="Điều khiển trình chiếu">
+    <button id="prev" type="button" aria-label="Slide trước" title="Slide trước (←)">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <div class="progress-shell" aria-hidden="true"><span id="progress"></span></div>
+    <span class="counter"><b id="current">01</b><i>/</i><span id="total">21</span></span>
+    <button id="overviewButton" type="button" aria-label="Mở tổng quan slide" title="Tổng quan (O)">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6" height="6"/><rect x="14" y="4" width="6" height="6"/><rect x="4" y="14" width="6" height="6"/><rect x="14" y="14" width="6" height="6"/></svg>
+    </button>
+    <button id="fullscreenButton" type="button" aria-label="Bật tắt toàn màn hình" title="Toàn màn hình (F)">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg>
+    </button>
+    <button id="next" type="button" aria-label="Slide tiếp theo" title="Slide tiếp theo (→)">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+  </nav>
+
+  <aside class="overview" id="overview" aria-hidden="true" aria-label="Tổng quan slide">
+    <div class="overview-bar"><strong>Tổng quan slide</strong><button id="closeOverview" type="button" aria-label="Đóng tổng quan">×</button></div>
+    <div class="overview-grid" id="overviewGrid"></div>
+  </aside>
+
+  <div class="shortcut-hint" id="shortcutHint">← → chuyển slide · O tổng quan · F toàn màn hình</div>
+  <script src="/app.js"></script>
+</body>
+</html>

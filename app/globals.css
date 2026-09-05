@@ -1,0 +1,154 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "../vendor/shadcn-tailwind-4.13.0.css";
+
+@utility scrollbar-thin {
+  scrollbar-width: thin;
+}
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility scrollbar-gutter-stable {
+  scrollbar-gutter: stable;
+}
+
+:root {
+  --background: #02030b;
+  --foreground: #f6f8ff;
+  --card: #0c1128;
+  --card-foreground: #f6f8ff;
+  --popover: #0c1128;
+  --popover-foreground: #f6f8ff;
+  --primary: #32e6e2;
+  --primary-foreground: #031315;
+  --secondary: #171d3a;
+  --secondary-foreground: #e8ecff;
+  --muted: #11162e;
+  --muted-foreground: #9aa5c6;
+  --accent: #a879ff;
+  --accent-foreground: #ffffff;
+  --destructive: #ff5ca8;
+  --border: #ffffff1f;
+  --input: #ffffff24;
+  --ring: #32e6e2;
+  --chart-1: #32e6e2;
+  --chart-2: #a879ff;
+  --chart-3: #ffc857;
+  --chart-4: #ff5ca8;
+  --chart-5: #62e6a7;
+  --radius: 0.9rem;
+  --sidebar: #080c1f;
+  --sidebar-foreground: #f6f8ff;
+  --sidebar-primary: #32e6e2;
+  --sidebar-primary-foreground: #031315;
+  --sidebar-accent: #171d3a;
+  --sidebar-accent-foreground: #f6f8ff;
+  --sidebar-border: #ffffff1f;
+  --sidebar-ring: #32e6e2;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --font-sans: Arial, Helvetica, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #02030b;
+    --foreground: #f6f8ff;
+    --card: #0c1128;
+    --card-foreground: #f6f8ff;
+    --popover: #0c1128;
+    --popover-foreground: #f6f8ff;
+    --primary: #32e6e2;
+    --primary-foreground: #031315;
+    --secondary: #171d3a;
+    --secondary-foreground: #e8ecff;
+    --muted: #11162e;
+    --muted-foreground: #9aa5c6;
+    --accent: #a879ff;
+    --accent-foreground: #ffffff;
+    --destructive: #ff5ca8;
+    --border: #ffffff1f;
+    --input: #ffffff24;
+    --ring: #32e6e2;
+    --chart-1: #32e6e2;
+    --chart-2: #a879ff;
+    --chart-3: #ffc857;
+    --chart-4: #ff5ca8;
+    --chart-5: #62e6a7;
+    --sidebar: #080c1f;
+    --sidebar-foreground: #f6f8ff;
+    --sidebar-primary: #32e6e2;
+    --sidebar-primary-foreground: #031315;
+    --sidebar-accent: #171d3a;
+    --sidebar-accent-foreground: #f6f8ff;
+    --sidebar-border: #ffffff1f;
+    --sidebar-ring: #32e6e2;
+  }
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background: #02030b;
+  color: #f6f8ff;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.presentation-shell {
+  width: 100vw;
+  height: 100dvh;
+  overflow: hidden;
+  background: #02030b;
+}
+
+.presentation-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #02030b;
+}
