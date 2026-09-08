@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "DSA — Thuật toán tìm kiếm & Bảng băm",
-  description: "Bài trình chiếu web tương tác về thuật toán tìm kiếm và bảng băm.",
+  title: "DSA — Search Algorithms & Hash Tables",
+  description: "An interactive web presentation on search algorithms and hash tables.",
   other: {
     "codex-preview": "development",
   },
@@ -19,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi">
+    <html lang="en">
       <body>{children}</body>
     </html>
   );

@@ -4,7 +4,7 @@ export default function Home() {
       <iframe
         className="presentation-frame"
         src="/presentation.html"
-        title="DSA — Thuật toán tìm kiếm & Bảng băm"
+        title="DSA — Search Algorithms & Hash Tables"
         allow="fullscreen"
       />
     </main>
