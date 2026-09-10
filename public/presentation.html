@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#060818">
   <meta name="description" content="An interactive presentation on search algorithms and hash tables.">
   <title>DSA — Search Algorithms &amp; Hash Tables</title>
-  <link rel="stylesheet" href="/app.css">
+  <link rel="stylesheet" href="app.css">
 </head>
 <body>
   <canvas id="particles" aria-hidden="true"></canvas>
@@ -344,6 +344,7 @@
           <h2>Search by key,<br>not by position.</h2>
           <p class="body-large">A hash function maps a key to a table address for searching, insertion, and deletion.</p>
           <p class="body-large">Different keys can map to the same address. This is called a <strong class="pink-text">collision</strong>.</p>
+          <a class="replay pink-button" href="hash-lab.html">Open Hash Lab: three functions + four collision strategies</a>
         </div>
         <div class="hash-flow" aria-label="A key is transformed by a hash function into an index">
           <div class="hash-pill key-pill">key<br><strong>1246</strong></div>
@@ -359,13 +360,13 @@
     <section class="slide" data-title="Hash functions">
       <header class="slide-head">
         <p class="kicker pink-text">HASH FUNCTIONS</p>
-        <h2>Four common ways to create an address</h2>
+        <h2>Three ways to create an address</h2>
+        <a href="hash-lab.html" class="pink-text">Try every method with your own keys and view C++17 source →</a>
       </header>
-      <div class="function-grid">
+      <div class="function-grid three-functions">
         <article><span>01</span><h3>Division</h3><code>h(k) = k mod m</code></article>
         <article><span>02</span><h3>Multiplication</h3><code>⌊m · frac(kA)⌋</code></article>
         <article><span>03</span><h3>Mid-square</h3><code>middle(k²)</code></article>
-        <article><span>04</span><h3>Folding method</h3><code>sum(parts)</code></article>
       </div>
     </section>
 
@@ -410,26 +411,6 @@
       </div>
     </section>
 
-    <section class="slide" data-title="Folding method">
-      <header class="slide-head compact-head">
-        <p class="kicker pink-text">HASH FUNCTIONS</p>
-        <h2>Folding method</h2>
-      </header>
-      <div class="fold-layout">
-        <div class="fold-key">17 046 329</div>
-        <div class="fold-cards">
-          <article>
-            <h3>Shift folding</h3>
-            <div class="number-stack"><span>329</span><span>046</span><span>017</span><strong>392</strong></div>
-          </article>
-          <article>
-            <h3>Boundary folding</h3>
-            <div class="number-stack"><span>046</span><span>923</span><span>710</span><strong>1679</strong></div>
-          </article>
-        </div>
-        <p class="muted centered">Split the key into equal-length parts, align them or reverse alternating parts, then add them.</p>
-      </div>
-    </section>
 
     <section class="slide" data-title="Collision resolution">
       <header class="slide-head">
@@ -518,7 +499,7 @@
   </aside>
 
   <div class="shortcut-hint" id="shortcutHint">← → navigate · O overview · F fullscreen</div>
-  <script src="/demo-engine.js"></script>
-  <script src="/app.js"></script>
+  <script src="demo-engine.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
