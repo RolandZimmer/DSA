@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hash Lab — DSA</title>
+<link rel="stylesheet" href="hash-lab.css">
+</head>
+<body>
+<header><a href="presentation.html#/14">← Back to presentation</a><a href="code/hash_demo.cpp" download>Download C++17 source</a></header>
+<main>
+<div class="intro"><p class="eyebrow">DSA / INTERACTIVE DEMOS</p><h1>Hash Lab</h1><p>Choose a hash function and a collision strategy. Follow each insertion, lookup and deletion.</p></div>
+<form id="setup" class="panel settings">
+<label>Hash function<select id="method"><option value="division">Division</option><option value="mid-square">Mid-square</option><option value="multiplication">Multiplication</option></select></label>
+<label>Collision strategy<select id="strategy"><option value="linear">Linear probing</option><option value="quadratic">Quadratic probing</option><option value="double">Double hashing</option><option value="chaining">Separate chaining</option></select></label>
+<label>Table size<input id="size" type="number" min="2" max="31" value="11" required></label>
+<label class="keys">Initial keys<input id="keys" value="22, 33, 44" maxlength="100" required></label>
+<button class="primary" type="submit">Build table</button>
+</form>
+<p id="method-note" class="note"></p>
+<div class="workspace">
+<section class="panel table-panel" aria-label="Hash table visualization">
+<div class="table-heading"><h2>Table</h2><span id="load"></span></div>
+<div id="slots" class="slots"></div>
+<div class="legend">EMPTY = unused slot · DEL = tombstone · bucket lists = chaining</div>
+<p id="status" role="status" aria-live="polite"></p>
+<div class="playback"><button id="step" type="button">Next step</button><button id="play" type="button">Play</button><button id="finish" type="button">Show result</button><span id="counter"></span></div>
+<form id="operation"><label>Key<input id="key" type="number" min="-9999" max="9999" value="33" required></label><button name="action" value="insert">Insert</button><button name="action" value="find">Find</button><button name="action" value="delete">Delete</button></form>
+<form id="resize"><label>New table size<input id="new-size" type="number" min="2" max="31" value="23" required></label><button type="submit">Resize &amp; rehash</button></form>
+<p class="note">Change settings and rebuild to start a new table. Finish the current trace before another operation.</p>
+</section>
+<aside class="panel"><h2>How this run works</h2><p id="formula" class="formula"></p><p id="strategy-note"></p><p class="note">Expected O(1) operations need a well-distributed hash and controlled load. Worst case is O(n). Use Resize &amp; rehash to move all live keys to a new table. Each rebuild costs O(n) with good distribution and enough capacity; geometric growth gives expected amortized O(1) insertion.</p><details><summary>C++17 code</summary><p>Download the complete program above to compile and enter your own keys.</p><pre><code id="code"></code></pre></details></aside>
+</div>
+</main>
+<script src="demo-engine.js"></script><script src="hash-engine.js"></script><script src="hash-lab.js"></script>
+</body></html>
